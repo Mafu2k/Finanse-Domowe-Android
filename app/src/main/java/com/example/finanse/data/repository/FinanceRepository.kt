@@ -1,121 +1,137 @@
 package com.example.finanse.data.repository
 
-import com.example.finanse.data.DatabaseHelper
-import com.example.finanse.data.entity.*
+import com.example.finanse.data.AppDatabase
+import com.example.finanse.data.entity.Account
+import com.example.finanse.data.entity.Budget
+import com.example.finanse.data.entity.Category
+import com.example.finanse.data.entity.Currency
+import com.example.finanse.data.entity.Goal
+import com.example.finanse.data.entity.RecurringTransaction
+import com.example.finanse.data.entity.Transaction
+import com.example.finanse.data.entity.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class FinanceRepository(private val dbHelper: DatabaseHelper) {
+class FinanceRepository(private val database: AppDatabase) {
+
+    private val userDao = database.userDao()
+    private val accountDao = database.accountDao()
+    private val transactionDao = database.transactionDao()
+    private val categoryDao = database.categoryDao()
+    private val budgetDao = database.budgetDao()
+    private val goalDao = database.goalDao()
+    private val recurringTransactionDao = database.recurringTransactionDao()
+    private val currencyDao = database.currencyDao()
 
     suspend fun getAllTransactions(userId: Int): List<Transaction> = withContext(Dispatchers.IO) {
-        dbHelper.getAllTransactions(userId)
+        transactionDao.getAllByUserId(userId)
     }
 
     suspend fun getAllAccounts(userId: Int): List<Account> = withContext(Dispatchers.IO) {
-        dbHelper.getAllAccounts(userId)
+        accountDao.getAllByUserId(userId)
     }
 
     suspend fun getAllCategories(userId: Int): List<Category> = withContext(Dispatchers.IO) {
-        dbHelper.getAllCategories(userId)
+        categoryDao.getAllByUserId(userId)
     }
 
     suspend fun getAllBudgets(userId: Int): List<Budget> = withContext(Dispatchers.IO) {
-        dbHelper.getAllBudgets(userId)
+        budgetDao.getAllByUserId(userId)
     }
 
     suspend fun getAllGoals(userId: Int): List<Goal> = withContext(Dispatchers.IO) {
-        dbHelper.getAllGoals(userId)
+        goalDao.getAllByUserId(userId)
     }
 
     suspend fun getAllUsers(): List<User> = withContext(Dispatchers.IO) {
-        dbHelper.getAllUsers()
+        userDao.getAll()
     }
 
     suspend fun getAllCurrencies(): List<Currency> = withContext(Dispatchers.IO) {
-        dbHelper.getAllCurrencies()
+        currencyDao.getAll()
     }
 
     suspend fun insertUser(user: User): Long = withContext(Dispatchers.IO) {
-        dbHelper.insertUser(user)
+        userDao.insert(user)
     }
 
     suspend fun getUserById(id: Int): User? = withContext(Dispatchers.IO) {
-        dbHelper.getUserById(id)
+        userDao.getById(id)
     }
 
     suspend fun insertTransaction(transaction: Transaction) = withContext(Dispatchers.IO) {
-        dbHelper.insertTransaction(transaction)
+        transactionDao.insert(transaction)
     }
 
     suspend fun updateTransaction(transaction: Transaction) = withContext(Dispatchers.IO) {
-        dbHelper.updateTransaction(transaction)
+        transactionDao.update(transaction)
     }
 
     suspend fun deleteTransaction(transaction: Transaction) = withContext(Dispatchers.IO) {
-        dbHelper.deleteTransaction(transaction)
+        transactionDao.delete(transaction)
     }
 
     suspend fun insertAccount(account: Account) = withContext(Dispatchers.IO) {
-        dbHelper.insertAccount(account)
+        accountDao.insert(account)
     }
 
     suspend fun updateAccount(account: Account) = withContext(Dispatchers.IO) {
-        dbHelper.updateAccount(account)
+        accountDao.update(account)
     }
 
     suspend fun deleteAccount(account: Account) = withContext(Dispatchers.IO) {
-        dbHelper.deleteAccount(account)
+        accountDao.delete(account)
     }
 
     suspend fun insertGoal(goal: Goal) = withContext(Dispatchers.IO) {
-        dbHelper.insertGoal(goal)
+        goalDao.insert(goal)
     }
 
     suspend fun updateGoal(goal: Goal) = withContext(Dispatchers.IO) {
-        dbHelper.updateGoal(goal)
+        goalDao.update(goal)
     }
 
     suspend fun deleteGoal(goal: Goal) = withContext(Dispatchers.IO) {
-        dbHelper.deleteGoal(goal)
+        goalDao.delete(goal)
     }
 
     suspend fun insertBudget(budget: Budget) = withContext(Dispatchers.IO) {
-        dbHelper.insertBudget(budget)
+        budgetDao.insert(budget)
     }
 
     suspend fun updateBudget(budget: Budget) = withContext(Dispatchers.IO) {
-        dbHelper.updateBudget(budget)
+        budgetDao.update(budget)
     }
 
     suspend fun insertCategory(category: Category) = withContext(Dispatchers.IO) {
-        dbHelper.insertCategory(category)
+        categoryDao.insert(category)
     }
 
     suspend fun getAccountById(id: Int): Account? = withContext(Dispatchers.IO) {
-        dbHelper.getAccountById(id)
+        accountDao.getById(id)
     }
 
     suspend fun getCategoryById(id: Int): Category? = withContext(Dispatchers.IO) {
-        dbHelper.getCategoryById(id)
+        categoryDao.getById(id)
     }
 
     suspend fun searchTransactions(userId: Int, query: String): List<Transaction> = withContext(Dispatchers.IO) {
-        dbHelper.searchTransactions(userId, query)
+        transactionDao.searchByUserId(userId, "%$query%")
     }
 
     suspend fun insertRecurringTransaction(recurring: RecurringTransaction) = withContext(Dispatchers.IO) {
-        dbHelper.insertRecurringTransaction(recurring)
+        recurringTransactionDao.insert(recurring)
     }
 
     suspend fun getAllRecurringTransactions(userId: Int): List<RecurringTransaction> = withContext(Dispatchers.IO) {
-        dbHelper.getAllRecurringTransactions(userId)
+        recurringTransactionDao.getAllByUserId(userId)
     }
 
     suspend fun insertCurrency(currency: Currency) = withContext(Dispatchers.IO) {
-        dbHelper.insertCurrency(currency)
+        currencyDao.insert(currency)
     }
 
     suspend fun getCurrencyByCode(code: String): Currency? = withContext(Dispatchers.IO) {
-        dbHelper.getCurrencyByCode(code)
+        currencyDao.getByCode(code)
     }
 }

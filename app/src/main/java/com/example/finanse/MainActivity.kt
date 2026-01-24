@@ -29,7 +29,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.finanse.data.DatabaseHelper
+import com.example.finanse.data.AppDatabase
 import com.example.finanse.data.entity.User
 import com.example.finanse.data.repository.FinanceRepository
 import com.example.finanse.ui.ChartsScreen
@@ -44,8 +44,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val dbHelper = DatabaseHelper.getDatabase(this)
-        val repository = FinanceRepository(dbHelper)
+        val database = AppDatabase.getDatabase(this)
+        val repository = FinanceRepository(database)
         val viewModelFactory = FinanceViewModelFactory(repository)
 
         setContent {

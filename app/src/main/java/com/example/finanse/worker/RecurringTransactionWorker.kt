@@ -3,7 +3,7 @@ package com.example.finanse.worker
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.example.finanse.data.DatabaseHelper
+import com.example.finanse.data.AppDatabase
 import com.example.finanse.data.entity.Transaction
 import com.example.finanse.data.repository.FinanceRepository
 import kotlinx.coroutines.Dispatchers
@@ -14,8 +14,8 @@ class RecurringTransactionWorker(appContext: Context, workerParams: WorkerParame
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
-            val dbHelper = DatabaseHelper.getDatabase(applicationContext)
-            val repository = FinanceRepository(dbHelper)
+            val database = AppDatabase.getDatabase(applicationContext)
+            val repository = FinanceRepository(database)
 
             // Pobierz wszystkich użytkowników i sprawdź ich transakcje cykliczne
             val users = repository.getAllUsers()
