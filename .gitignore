@@ -13,3 +13,10 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Android build output
+/build
+app/build/
+**/build/
+.gradle/
+.cxx/
