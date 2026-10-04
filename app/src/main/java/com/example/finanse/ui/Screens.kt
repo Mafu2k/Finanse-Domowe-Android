@@ -180,32 +180,6 @@ fun DashboardScreen(viewModel: FinanceViewModel) {
             BudgetPieChart(transactions, viewModel)
             Spacer(modifier = Modifier.height(24.dp))
         }
-
-        item {
-            Text("AI Insights", fontWeight = FontWeight.Bold, fontSize = 20.sp)
-            Spacer(modifier = Modifier.height(12.dp))
-            AiInsightsCard()
-            Spacer(modifier = Modifier.height(32.dp))
-        }
-    }
-}
-
-@Composable
-fun AiInsightsCard() {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F5E9))
-    ) {
-        Column(modifier = Modifier.padding(20.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Default.AutoAwesome, contentDescription = null, tint = Color(0xFF2E7D32))
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("AI Financial Insight", fontWeight = FontWeight.Bold, color = Color(0xFF2E7D32))
-            }
-            Spacer(modifier = Modifier.height(12.dp))
-            Text("Twoje wydatki na Jedzenie wzrosły o 15% w porównaniu do zeszłego miesiąca. Sugerujemy sprawdzenie subskrypcji.", fontSize = 14.sp)
-        }
     }
 }
 
